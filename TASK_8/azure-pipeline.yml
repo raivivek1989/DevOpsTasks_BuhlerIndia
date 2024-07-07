@@ -1,0 +1,24 @@
+trigger:
+  - none # Manually triggered pipeline
+
+pool:
+  vmImage: "windows-latest" # Uses a Windows virtual agent
+
+parameters:
+  - name: env
+    displayName: Environment to deploy
+    type: string
+    default: 'dev'
+    values:
+      - 'dev'
+      - 'qa'
+      - 'prod'
+
+variables:
+  - name: ENVIRONMENT
+    value: ${{ parameters.env }}
+    
+stages:
+  - template: environment_stage.yml
+    parameters:
+      environmentName: ${{ variables.environment }}

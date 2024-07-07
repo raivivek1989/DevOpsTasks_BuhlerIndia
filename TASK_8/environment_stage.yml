@@ -1,0 +1,12 @@
+parameters:
+  - name: environmentName  # Name of the environment (e.g., Dev, QA, Prod)
+    type: string
+
+stages:
+  - stage: ${{ parameters.environmentName }}
+    jobs:
+      - job: Build_and_Deploy_${{ parameters.environmentName }}
+        steps:
+          - script: |
+              pwsh ./TASK_8/deploy_script.ps1 -Environment ${{ parameters.environmentName }}
+            displayName: "Run deploy script for ${{ parameters.environmentName }}"
